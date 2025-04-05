@@ -12,8 +12,8 @@
 ### 2️⃣ Clona el Repositorio
 Abre una terminal y ejecuta:
 ```bash
-git clone https://github.com/tu_usuario/tu_repositorio.git
-cd tu_repositorio
+git clone https://github.com/Angel-Rojas-ING/Video-Translator.git
+cd Video-Translator.git
 ```
 
 ### 3️⃣ Ejecuta el Script como Administrador
