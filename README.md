@@ -90,37 +90,6 @@ Puedes ajustar el script editando `video_translator.py`:
   output_dir = "C:/ruta/personalizada"
   ```
 
----
-
-## 🌍 Contribuir
-
-¡Tu ayuda es bienvenida! Para contribuir:
-1. Haz un fork del repositorio.
-2. Crea una rama:
-   ```bash
-   git checkout -b feature/nueva-funcion
-   ```
-3. Realiza tus cambios y haz commit:
-   ```bash
-   git commit -m "Agregué nueva función"
-   ```
-4. Sube tu rama:
-   ```bash
-   git push origin feature/nueva-funcion
-   ```
-5. Abre un Pull Request en GitHub.
-
-### Ideas para Contribuir
-- Soporte para otros idiomas de entrada/salida.
-- Mejora de la voz con otras APIs de TTS.
-- Interfaz gráfica opcional.
-
----
-
-## 📬 Soporte y Contacto
-
-- **Issues**: Abre un issue en este repositorio si encuentras problemas o tienes sugerencias.
-- **Correo**: Contacta al mantenedor en [tu_email@example.com](mailto:tu_email@example.com).
 
 ---
 
