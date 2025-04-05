@@ -1,125 +1,139 @@
+## 🚀 Instalación Paso a Paso
 
-```markdown
-# 🎥 Video Translator
-
-![Banner](https://img.shields.io/badge/Status-Actively%20Developed-brightgreen)  
-**Traduce y sincroniza el audio de tus videos de inglés a español con facilidad.**
-
----
-
-## 🌟 Descripción
-
-**Video Translator** es una herramienta poderosa y fácil de usar que transforma tus videos al traducir automáticamente el audio de inglés a español y sincronizarlo con el contenido visual. Utiliza tecnologías avanzadas como Whisper para la transcripción, Google Translate para la traducción y gTTS para generar una voz en español natural. El resultado es un nuevo video con el audio traducido, listo para compartir o disfrutar.
-
-Perfecto para creadores de contenido, educadores, o cualquier persona que desee hacer sus videos accesibles en español sin esfuerzo manual.
-
----
-
-## ✨ Características
-
-- **Transcripción Automática**: Convierte el audio en texto usando Whisper de OpenAI.
-- **Traducción Precisa**: Traduce de inglés a español con Google Translate.
-- **Sincronización Inteligente**: Ajusta el audio generado para alinearse con el video original.
-- **Instalación Sencilla**: Instala FFmpeg y todas las dependencias de Python automáticamente.
-- **Limpieza Completa**: Elimina todos los archivos intermedios, dejando solo el video final.
-- **Portátil**: Guarda el video traducido en el mismo directorio que el original.
-
----
-
-## 🚀 Requisitos
-
-- **Sistema Operativo**: Windows (para la instalación automática de FFmpeg).
-- **Privilegios**: Ejecución como administrador (para instalar FFmpeg).
-- **Internet**: Necesario para descargar FFmpeg y usar servicios de traducción.
-
----
-
-## 🛠️ Instalación
-
-### 1. Instala Python (si no lo tienes)
-- Descarga Python 3.8 o superior desde [python.org](https://www.python.org/downloads/).
-- Asegúrate de marcar "Add Python to PATH" durante la instalación.
-- Verifica con:
+### 1️⃣ Instala Python (si no lo tienes)
+- **Descarga**: Visita [python.org](https://www.python.org/downloads/) y descarga Python 3.8 o superior.
+- **Instala**: Durante la instalación, marca la casilla **"Add Python to PATH"**.
+- **Verifica**: Abre una terminal y ejecuta:
   ```bash
   python --version
   ```
+  Deberías ver algo como `Python 3.x.x`.
 
-### 2. Clona el Repositorio
+### 2️⃣ Clona el Repositorio
+Abre una terminal y ejecuta:
 ```bash
 git clone https://github.com/tu_usuario/tu_repositorio.git
 cd tu_repositorio
 ```
 
-### 3. Ejecuta el Script
-- Abre una terminal como administrador (en Windows, busca "cmd" o "PowerShell", haz clic derecho y selecciona "Ejecutar como administrador").
+### 3️⃣ Ejecuta el Script como Administrador
+- **Windows**: Busca "cmd" o "PowerShell", haz clic derecho y selecciona **"Ejecutar como administrador"**.
 - Corre el script:
   ```bash
   python video_translator.py
   ```
-- El script instalará FFmpeg y las dependencias de Python si no están presentes.
+- **Qué hará el script**:
+  - Verifica si Python está instalado.
+  - Instala FFmpeg si no está presente (descarga y agrega al PATH).
+  - Instala dependencias de Python (`openai-whisper`, `deep-translator`, `gtts`, `tk`).
 
-> **Nota**: Reinicia tu terminal o computadora después de la primera ejecución para que los cambios en el PATH surtan efecto.
-
----
-
-## 🎬 Uso
-
-1. **Selecciona un Video**: Cuando ejecutes el script, se abrirá un cuadro de diálogo. Elige el video que deseas traducir (formatos soportados: `.mp4`, `.mkv`, `.avi`, `.mov`).
-2. **Espera el Proceso**: El script transcribirá, traducirá y generará un nuevo video automáticamente.
-3. **Encuentra el Resultado**: El video traducido aparecerá en el mismo directorio que el original con el sufijo `_espanol` (ejemplo: `mi_video_espanol.mp4`).
+> 💡 **Nota**: Reinicia tu terminal o computadora después de la primera ejecución para que los cambios en el PATH surtan efecto.
 
 ---
 
-## 📋 Ejemplo
+## 🎬 Cómo Usarlo
 
-**Entrada**: `tutorial.mp4` (un video en inglés de 5 minutos).  
-**Salida**: `tutorial_espanol.mp4` (el mismo video con audio en español sincronizado).  
+1. **Selecciona tu Video**:
+   - Al ejecutar el script, se abrirá un cuadro de diálogo.
+   - Elige un video en formatos soportados: `.mp4`, `.mkv`, `.avi`, `.mov`.
+
+2. **Espera el Proceso**:
+   - El script realizará:
+     1. Extracción del audio.
+     2. Transcripción con Whisper.
+     3. Traducción a español.
+     4. Generación de audio sincronizado.
+     5. Creación del video final.
+
+3. **Obtén el Resultado**:
+   - El video traducido aparecerá como `{nombre_del_video}_espanol.mp4` en el mismo directorio del original.
+
+### 📋 Ejemplo Visual
+```
+Entrada: tutorial.mp4 (5 minutos en inglés)
+↓
+Procesamiento: [Transcripción → Traducción → Síntesis de voz → Sincronización]
+↓
+Salida: tutorial_espanol.mp4 (5 minutos con audio en español)
+```
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## ⚙️ Detalles Técnicos
 
-- **Whisper (OpenAI)**: Transcripción de audio a texto.
-- **Google Translate (via deep-translator)**: Traducción de inglés a español.
-- **gTTS**: Generación de voz en español.
-- **FFmpeg**: Procesamiento de audio y video.
-- **Python**: Lenguaje principal del script.
+### Tecnologías Utilizadas
+- **Whisper (OpenAI)**: Transcripción precisa con marcas de tiempo para sincronización.
+- **Google Translate (deep-translator)**: Traducción rápida y confiable.
+- **gTTS (Google Text-to-Speech)**: Voz en español natural y ajustable.
+- **FFmpeg**: Herramienta esencial para procesamiento de audio y video.
+- **Python 3.8+**: Lenguaje base, con bibliotecas integradas como `tkinter`.
+
+### Flujo del Proceso
+1. **Extracción**: FFmpeg extrae el audio del video.
+2. **Transcripción**: Whisper convierte el audio en texto segmentado.
+3. **Traducción**: Deep-translator traduce cada segmento a español.
+4. **Síntesis**: gTTS genera audio para cada segmento, ajustado a su duración original.
+5. **Sincronización**: FFmpeg concatena los segmentos y los combina con el video.
+6. **Limpieza**: Todos los archivos temporales se eliminan automáticamente.
 
 ---
 
-## ⚙️ Notas Importantes
+## 🔧 Personalización
 
-- **Conexión a Internet**: Requerida para descargar FFmpeg y usar Google Translate.
-- **Duración del Video**: Videos largos pueden tardar más en procesarse, dependiendo de tu hardware.
-- **Precisión**: Para mejores resultados en la transcripción, considera usar el modelo `medium` de Whisper (cambia `load_model("base")` a `load_model("medium")` en el código, aunque será más lento).
+Puedes ajustar el script editando `video_translator.py`:
+- **Modelo de Whisper**: Cambia `load_model("base")` a `load_model("medium")` para mayor precisión (más lento).
+  ```python
+  model = whisper.load_model("medium")
+  ```
+- **Directorio de Salida**: Modifica `output_dir` para guardar el video en otra ubicación.
+  ```python
+  output_dir = "C:/ruta/personalizada"
+  ```
 
 ---
 
-## 🤝 Contribuir
+## 🌍 Contribuir
 
-¡Las contribuciones son bienvenidas! Si tienes ideas para mejorar el script:
+¡Tu ayuda es bienvenida! Para contribuir:
 1. Haz un fork del repositorio.
-2. Crea una rama (`git checkout -b feature/nueva-funcion`).
-3. Haz tus cambios y haz commit (`git commit -m "Agregué nueva función"`).
-4. Sube tus cambios (`git push origin feature/nueva-funcion`).
-5. Abre un Pull Request.
+2. Crea una rama:
+   ```bash
+   git checkout -b feature/nueva-funcion
+   ```
+3. Realiza tus cambios y haz commit:
+   ```bash
+   git commit -m "Agregué nueva función"
+   ```
+4. Sube tu rama:
+   ```bash
+   git push origin feature/nueva-funcion
+   ```
+5. Abre un Pull Request en GitHub.
+
+### Ideas para Contribuir
+- Soporte para otros idiomas de entrada/salida.
+- Mejora de la voz con otras APIs de TTS.
+- Interfaz gráfica opcional.
 
 ---
 
-## 📬 Contacto
+## 📬 Soporte y Contacto
 
-Si tienes preguntas o necesitas ayuda, abre un issue en este repositorio o contacta al mantenedor en [tu_email@example.com](mailto:tu_email@example.com).
-
----
-
-## 🌐 Licencia
-
-Este proyecto está bajo la [Licencia MIT](LICENSE). Siéntete libre de usarlo y modificarlo según tus necesidades.
+- **Issues**: Abre un issue en este repositorio si encuentras problemas o tienes sugerencias.
+- **Correo**: Contacta al mantenedor en [tu_email@example.com](mailto:tu_email@example.com).
 
 ---
 
-**¡Disfruta traduciendo tus videos con Video Translator!**  
-_Creado con ❤️ para la comunidad._
+## 📜 Licencia
+
+Este proyecto está licenciado bajo la [Licencia MIT](LICENSE). Siéntete libre de usarlo, modificarlo y distribuirlo según tus necesidades.
+
+---
+
+<div align="center">
+  <h2>🎉 ¡Traduce tus videos y comparte tu contenido con el mundo!</h2>
+  <p><em>Creado con ❤️ para la comunidad global.</em></p>
+</div>
 ```
 
 
